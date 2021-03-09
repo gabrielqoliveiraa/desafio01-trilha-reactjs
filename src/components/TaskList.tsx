@@ -33,10 +33,6 @@ export function TaskList() {
       }])
     }
 
-    
-
-    
-    
 
 
   function handleToggleTaskCompletion(id: number) {
@@ -49,29 +45,9 @@ export function TaskList() {
       objectTask.isComplete = off
       setOff(!off)
     }
-
-
-
-    
-          
-
-
   }
-    
-  
-  
-    
 
-    
 
-   
-
-    
-
-    
-
-    
-    
 
   
   function handleRemoveTask(id: number) {
