@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -13,15 +13,7 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [active, setActive] = useState(true)
-  const [off, setOff] = useState(false)
-  
-  
-  useEffect(()=>{
-    setActive(true)
-    setOff(false)
-  },[active, off])
-
+ 
 
   function handleCreateNewTask() {
 
@@ -31,6 +23,8 @@ export function TaskList() {
           title: newTaskTitle,
           isComplete: false
       }])
+      setNewTaskTitle('')
+
     }
 
 
@@ -38,14 +32,16 @@ export function TaskList() {
   function handleToggleTaskCompletion(id: number) {
     const objectTask = tasks.filter(task => task.id === id)[0]
 
-    if(objectTask.isComplete !== active){
-      objectTask.isComplete = active;
-      setActive(!active)
+    if(objectTask.isComplete === false){
+      objectTask.isComplete = true;
+      setTasks([...tasks])
     } else {
-      objectTask.isComplete = off
-      setOff(!off)
+      objectTask.isComplete = false
+      setTasks([...tasks])
     }
   }
+
+
 
 
 
@@ -61,8 +57,10 @@ export function TaskList() {
     <section className="task-list container">
       <header>
         <h2>Minhas tasks</h2>
-
+        <form onSubmit={(event) => event.preventDefault()}>
         <div className="input-group">
+
+            
           <input
             type="text" 
             placeholder="Adicionar novo todo" 
@@ -73,7 +71,9 @@ export function TaskList() {
             <FiCheckSquare size={16} color="#fff"/>
           </button>
         </div>
+        </form>
       </header>
+          
 
       <main>
         <ul>
@@ -87,6 +87,7 @@ export function TaskList() {
                     checked={task.isComplete}
                     onClick={() => handleToggleTaskCompletion(task.id)}
                   />
+                    
                   <span className="checkmark"></span>
                 </label>
                 <p>{task.title}</p>
